@@ -11,11 +11,14 @@ Name:           python%{iusver}-backports
 Version:        1.0
 Release:        1.ius%{?dist}
 Summary:        Namespace for backported Python features
+Group:          Applications/System
 
 # Only code is sourced from http://www.python.org/dev/peps/pep-0382/
 License:        Public Domain
 URL:            https://pypi.python.org/pypi/backports
 Source0:        backports.py
+
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python%{iusver}-devel
 
