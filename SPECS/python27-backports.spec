@@ -1,8 +1,15 @@
 # https://bugzilla.redhat.com/show_bug.cgi?id=998047
 
-Name:           python-backports
+%define pymajor 2
+%define pyminor 7
+%define pyver %{pymajor}.%{pyminor}
+%define iusver %{pymajor}%{pyminor}
+%define __python %{_bindir}/python%{pyver}
+%define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+
+Name:           python%{iusver}-backports
 Version:        1.0
-Release:        3%{?dist}
+Release:        1.ius%{?dist}
 Summary:        Namespace for backported Python features
 
 # Only code is sourced from http://www.python.org/dev/peps/pep-0382/
@@ -10,7 +17,7 @@ License:        Public Domain
 URL:            https://pypi.python.org/pypi/backports
 Source0:        backports.py
 
-BuildRequires:  python2-devel
+BuildRequires:  python%{iusver}-devel
 
 %description
 The backports namespace is a namespace reserved for features backported from
@@ -47,6 +54,9 @@ install -pm 644 %{SOURCE0} %{buildroot}%{python_sitearch}/backports/__init__.py
 
 
 %changelog
+* Tue May 06 2014 Carl George <carl.george@rackspace.com> - 1.0-1.ius
+- Initial port from Fedora to IUS
+
 * Mon Aug 19 2013 Ian Weller <iweller@redhat.com> - 1.0-3
 - Install to both python_sitelib and python_sitearch
 
