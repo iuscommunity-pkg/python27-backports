@@ -11,6 +11,7 @@ Version:        1.0
 Release:        1.ius%{?dist}
 Summary:        Namespace for backported Python features
 Group:          Development/Languages
+Vendor:         IUS Community Project
 
 # Only code is sourced from http://www.python.org/dev/peps/pep-0382/
 License:        Public Domain
