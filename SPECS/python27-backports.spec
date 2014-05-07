@@ -1,17 +1,16 @@
-# https://bugzilla.redhat.com/show_bug.cgi?id=998047
-
-%define pymajor 2
-%define pyminor 7
-%define pyver %{pymajor}.%{pyminor}
-%define iusver %{pymajor}%{pyminor}
-%define __python %{_bindir}/python%{pyver}
-%define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+%global pymajor 2
+%global pyminor 7
+%global pyver %{pymajor}.%{pyminor}
+%global iusver %{pymajor}%{pyminor}
+%global __python2 %{_bindir}/python%{pyver}
+%global python2_sitelib  %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+%global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
 
 Name:           python%{iusver}-backports
 Version:        1.0
 Release:        1.ius%{?dist}
 Summary:        Namespace for backported Python features
-Group:          Applications/System
+Group:          Development/Languages
 
 # Only code is sourced from http://www.python.org/dev/peps/pep-0382/
 License:        Public Domain
@@ -41,24 +40,26 @@ package because of changes made in Python 3.3 in PEP 420
 
 
 %install
-mkdir -pm 755 %{buildroot}%{python_sitelib}/backports
-install -pm 644 %{SOURCE0} %{buildroot}%{python_sitelib}/backports/__init__.py
-%if "%{python_sitelib}" != "%{python_sitearch}"
-mkdir -pm 755 %{buildroot}%{python_sitearch}/backports
-install -pm 644 %{SOURCE0} %{buildroot}%{python_sitearch}/backports/__init__.py
+mkdir -pm 755 %{buildroot}%{python2_sitelib}/backports
+install -pm 644 %{SOURCE0} %{buildroot}%{python2_sitelib}/backports/__init__.py
+%if "%{python2_sitelib}" != "%{python2_sitearch}"
+mkdir -pm 755 %{buildroot}%{python2_sitearch}/backports
+install -pm 644 %{SOURCE0} %{buildroot}%{python2_sitearch}/backports/__init__.py
 %endif
 
  
 %files
-%{python_sitelib}/backports
-%if "%{python_sitelib}" != "%{python_sitearch}"
-%{python_sitearch}/backports
+%{python2_sitelib}/backports
+%if "%{python2_sitelib}" != "%{python2_sitearch}"
+%{python2_sitearch}/backports
 %endif
 
 
 %changelog
-* Tue May 06 2014 Carl George <carl.george@rackspace.com> - 1.0-1.ius
+* Wed May 07 2014 Carl George <carl.george@rackspace.com> - 1.0-1.ius
 - Initial port from Fedora to IUS
+- Define and use python2_sitelib and python2_sitearch
+- Switch to using globals
 
 * Mon Aug 19 2013 Ian Weller <iweller@redhat.com> - 1.0-3
 - Install to both python_sitelib and python_sitearch
