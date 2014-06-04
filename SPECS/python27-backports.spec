@@ -5,10 +5,11 @@
 %global __python2 %{_bindir}/python%{pyver}
 %global python2_sitelib  %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
+%global __os_install_post %{__python27_os_install_post}
 
 Name:           python%{iusver}-backports
 Version:        1.0
-Release:        1.ius%{?dist}
+Release:        2.ius%{?dist}
 Summary:        Namespace for backported Python features
 Group:          Development/Languages
 Vendor:         IUS Community Project
@@ -57,6 +58,9 @@ install -pm 644 %{SOURCE0} %{buildroot}%{python2_sitearch}/backports/__init__.py
 
 
 %changelog
+* Wed Jun 04 2014 Carl George <carl.george@rackspace.com> - 1.0-2.ius
+- Override __os_install_post to fix .pyc/pyo magic
+
 * Wed May 07 2014 Carl George <carl.george@rackspace.com> - 1.0-1.ius
 - Initial port from Fedora to IUS
 - Define and use python2_sitelib and python2_sitearch
