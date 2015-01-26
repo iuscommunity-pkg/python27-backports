@@ -9,7 +9,7 @@
 
 Name:           python%{iusver}-backports
 Version:        1.0
-Release:        2.ius%{?dist}
+Release:        3.ius%{?dist}
 Summary:        Namespace for backported Python features
 Group:          Development/Languages
 Vendor:         IUS Community Project
@@ -22,6 +22,8 @@ Source0:        backports.py
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  python%{iusver}-devel
+Requires:       python%{iusver}
+
 
 %description
 The backports namespace is a namespace reserved for features backported from
@@ -58,6 +60,9 @@ install -pm 644 %{SOURCE0} %{buildroot}%{python2_sitearch}/backports/__init__.py
 
 
 %changelog
+* Mon Jan 26 2015 Carl George <carl.george@rackspace.com> - 1.0-3.ius
+- Require main python27 package
+
 * Wed Jun 04 2014 Carl George <carl.george@rackspace.com> - 1.0-2.ius
 - Override __os_install_post to fix .pyc/pyo magic
 
